@@ -6,4 +6,6 @@ export * from './atraccion.model';
 export * from './parque.model';
 export * from './zona.model';
 export * from './puesto.model';
-export * from './usuarioplan.model';
+export * from './compra.model';
+export * from './compra-plan.model';
+export * from './plan-atraccion.model';

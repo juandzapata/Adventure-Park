@@ -5,5 +5,7 @@ export * from './parque.repository';
 export * from './plan.repository';
 export * from './puesto.repository';
 export * from './usuario.repository';
-export * from './usuarioplan.repository';
 export * from './zona.repository';
+export * from './compra-plan.repository';
+export * from './compra.repository';
+export * from './plan-atraccion.repository';
