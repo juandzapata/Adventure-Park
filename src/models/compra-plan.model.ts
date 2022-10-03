@@ -21,6 +21,15 @@ export class CompraPlan extends Entity {
   })
   total: number;
 
+  @property({
+    type: 'number',
+  })
+  compraId?: number;
+
+  @property({
+    type: 'number',
+  })
+  planId?: number;
 
   constructor(data?: Partial<CompraPlan>) {
     super(data);
