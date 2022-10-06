@@ -1,8 +1,19 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {Ciudad} from './ciudad.model';
 import {Zona} from './zona.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_id_ciudad: {
+        name: 'fk_id_ciudad',
+        entity: 'Ciudad',
+        entityKey: 'id',
+        foreignKey: 'ciudadId'
+      }
+    }
+  }
+})
 export class Parque extends Entity {
   @property({
     type: 'number',
