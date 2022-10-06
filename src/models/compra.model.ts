@@ -1,9 +1,20 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
-import {Usuario} from './usuario.model';
-import {Plan} from './plan.model';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {CompraPlan} from './compra-plan.model';
+import {Plan} from './plan.model';
+import {Usuario} from './usuario.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_id_usuario: {
+        name: 'fk_id_usuario',
+        entity: 'Usuario',
+        entityKey: 'id',
+        foreignKey: 'usuarioId'
+      }
+    }
+  }
+})
 export class Compra extends Entity {
   @property({
     type: 'number',
