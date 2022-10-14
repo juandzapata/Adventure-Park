@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {Departamento} from './departamento.model';
 import {Parque} from './parque.model';
 
@@ -16,6 +16,11 @@ export class Ciudad extends Entity {
     required: true,
   })
   nombre: string;
+
+  @property({
+    type: 'string',
+  })
+  codigoPostal?: string;
 
   @belongsTo(() => Departamento)
   departamentoId: number;

@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Plan} from '../models';
 import {PlanRepository} from '../repositories';
 
+@authenticate('admin')
 export class PlanController {
   constructor(
     @repository(PlanRepository)
-    public planRepository : PlanRepository,
+    public planRepository: PlanRepository,
   ) {}
 
   @post('/plan')
@@ -52,9 +54,7 @@ export class PlanController {
     description: 'Plan model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Plan) where?: Where<Plan>,
-  ): Promise<Count> {
+  async count(@param.where(Plan) where?: Where<Plan>): Promise<Count> {
     return this.planRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class PlanController {
       },
     },
   })
-  async find(
-    @param.filter(Plan) filter?: Filter<Plan>,
-  ): Promise<Plan[]> {
+  async find(@param.filter(Plan) filter?: Filter<Plan>): Promise<Plan[]> {
     return this.planRepository.find(filter);
   }
 
@@ -106,7 +104,7 @@ export class PlanController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Plan, {exclude: 'where'}) filter?: FilterExcludingWhere<Plan>
+    @param.filter(Plan, {exclude: 'where'}) filter?: FilterExcludingWhere<Plan>,
   ): Promise<Plan> {
     return this.planRepository.findById(id, filter);
   }

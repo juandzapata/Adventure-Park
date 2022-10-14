@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -15,16 +16,14 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Zona,
-  Puesto,
-} from '../models';
+import {Puesto, Zona} from '../models';
 import {ZonaRepository} from '../repositories';
 
+@authenticate('admin')
 export class ZonaPuestoController {
   constructor(
     @repository(ZonaRepository) protected zonaRepository: ZonaRepository,
-  ) { }
+  ) {}
 
   @get('/zonas/{id}/puestos', {
     responses: {
@@ -61,11 +60,12 @@ export class ZonaPuestoController {
           schema: getModelSchemaRef(Puesto, {
             title: 'NewPuestoInZona',
             exclude: ['id'],
-            optional: ['zonaId']
+            optional: ['zonaId'],
           }),
         },
       },
-    }) puesto: Omit<Puesto, 'id'>,
+    })
+    puesto: Omit<Puesto, 'id'>,
   ): Promise<Puesto> {
     return this.zonaRepository.puestos(id).create(puesto);
   }
@@ -88,7 +88,8 @@ export class ZonaPuestoController {
       },
     })
     puesto: Partial<Puesto>,
-    @param.query.object('where', getWhereSchemaFor(Puesto)) where?: Where<Puesto>,
+    @param.query.object('where', getWhereSchemaFor(Puesto))
+    where?: Where<Puesto>,
   ): Promise<Count> {
     return this.zonaRepository.puestos(id).patch(puesto, where);
   }
@@ -103,7 +104,8 @@ export class ZonaPuestoController {
   })
   async delete(
     @param.path.number('id') id: number,
-    @param.query.object('where', getWhereSchemaFor(Puesto)) where?: Where<Puesto>,
+    @param.query.object('where', getWhereSchemaFor(Puesto))
+    where?: Where<Puesto>,
   ): Promise<Count> {
     return this.zonaRepository.puestos(id).delete(where);
   }

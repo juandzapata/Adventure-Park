@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {CompraPlan} from '../models';
 import {CompraPlanRepository} from '../repositories';
 
+@authenticate('admin')
 export class CompraPlanController {
   constructor(
     @repository(CompraPlanRepository)
-    public compraPlanRepository : CompraPlanRepository,
+    public compraPlanRepository: CompraPlanRepository,
   ) {}
 
   @post('/compra-plan')
@@ -106,7 +108,8 @@ export class CompraPlanController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(CompraPlan, {exclude: 'where'}) filter?: FilterExcludingWhere<CompraPlan>
+    @param.filter(CompraPlan, {exclude: 'where'})
+    filter?: FilterExcludingWhere<CompraPlan>,
   ): Promise<CompraPlan> {
     return this.compraPlanRepository.findById(id, filter);
   }

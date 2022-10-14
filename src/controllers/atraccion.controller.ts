@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Atraccion} from '../models';
 import {AtraccionRepository} from '../repositories';
 
+@authenticate('admin')
 export class AtraccionController {
   constructor(
     @repository(AtraccionRepository)
-    public atraccionRepository : AtraccionRepository,
+    public atraccionRepository: AtraccionRepository,
   ) {}
 
   @post('/atraccion')
@@ -106,7 +108,8 @@ export class AtraccionController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Atraccion, {exclude: 'where'}) filter?: FilterExcludingWhere<Atraccion>
+    @param.filter(Atraccion, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Atraccion>,
   ): Promise<Atraccion> {
     return this.atraccionRepository.findById(id, filter);
   }

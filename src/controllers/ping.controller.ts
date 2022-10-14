@@ -1,10 +1,11 @@
+import {authenticate} from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {
-  Request,
-  RestBindings,
   get,
+  Request,
   response,
   ResponseObject,
+  RestBindings,
 } from '@loopback/rest';
 
 /**
@@ -34,6 +35,7 @@ const PING_RESPONSE: ResponseObject = {
   },
 };
 
+@authenticate('admin')
 /**
  * A simple controller to bounce back http requests
  */

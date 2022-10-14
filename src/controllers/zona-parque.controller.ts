@@ -1,22 +1,15 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Zona,
-  Parque,
-} from '../models';
+import {authenticate} from '@loopback/authentication';
+import {repository} from '@loopback/repository';
+import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {Parque, Zona} from '../models';
 import {ZonaRepository} from '../repositories';
 
+@authenticate('admin')
 export class ZonaParqueController {
   constructor(
     @repository(ZonaRepository)
     public zonaRepository: ZonaRepository,
-  ) { }
+  ) {}
 
   @get('/zonas/{id}/parque', {
     responses: {

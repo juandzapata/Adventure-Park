@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -15,16 +16,15 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Departamento,
-  Ciudad,
-} from '../models';
+import {Ciudad, Departamento} from '../models';
 import {DepartamentoRepository} from '../repositories';
 
+@authenticate('admin')
 export class DepartamentoCiudadController {
   constructor(
-    @repository(DepartamentoRepository) protected departamentoRepository: DepartamentoRepository,
-  ) { }
+    @repository(DepartamentoRepository)
+    protected departamentoRepository: DepartamentoRepository,
+  ) {}
 
   @get('/departamentos/{id}/ciudads', {
     responses: {
@@ -61,11 +61,12 @@ export class DepartamentoCiudadController {
           schema: getModelSchemaRef(Ciudad, {
             title: 'NewCiudadInDepartamento',
             exclude: ['id'],
-            optional: ['departamentoId']
+            optional: ['departamentoId'],
           }),
         },
       },
-    }) ciudad: Omit<Ciudad, 'id'>,
+    })
+    ciudad: Omit<Ciudad, 'id'>,
   ): Promise<Ciudad> {
     return this.departamentoRepository.ciudades(id).create(ciudad);
   }
@@ -88,7 +89,8 @@ export class DepartamentoCiudadController {
       },
     })
     ciudad: Partial<Ciudad>,
-    @param.query.object('where', getWhereSchemaFor(Ciudad)) where?: Where<Ciudad>,
+    @param.query.object('where', getWhereSchemaFor(Ciudad))
+    where?: Where<Ciudad>,
   ): Promise<Count> {
     return this.departamentoRepository.ciudades(id).patch(ciudad, where);
   }
@@ -103,7 +105,8 @@ export class DepartamentoCiudadController {
   })
   async delete(
     @param.path.number('id') id: number,
-    @param.query.object('where', getWhereSchemaFor(Ciudad)) where?: Where<Ciudad>,
+    @param.query.object('where', getWhereSchemaFor(Ciudad))
+    where?: Where<Ciudad>,
   ): Promise<Count> {
     return this.departamentoRepository.ciudades(id).delete(where);
   }

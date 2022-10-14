@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Ciudad} from '../models';
 import {CiudadRepository} from '../repositories';
 
+@authenticate('admin')
 export class CiudadController {
   constructor(
     @repository(CiudadRepository)
-    public ciudadRepository : CiudadRepository,
+    public ciudadRepository: CiudadRepository,
   ) {}
 
   @post('/ciudads')
@@ -52,9 +54,7 @@ export class CiudadController {
     description: 'Ciudad model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Ciudad) where?: Where<Ciudad>,
-  ): Promise<Count> {
+  async count(@param.where(Ciudad) where?: Where<Ciudad>): Promise<Count> {
     return this.ciudadRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class CiudadController {
       },
     },
   })
-  async find(
-    @param.filter(Ciudad) filter?: Filter<Ciudad>,
-  ): Promise<Ciudad[]> {
+  async find(@param.filter(Ciudad) filter?: Filter<Ciudad>): Promise<Ciudad[]> {
     return this.ciudadRepository.find(filter);
   }
 
@@ -106,7 +104,8 @@ export class CiudadController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Ciudad, {exclude: 'where'}) filter?: FilterExcludingWhere<Ciudad>
+    @param.filter(Ciudad, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Ciudad>,
   ): Promise<Ciudad> {
     return this.ciudadRepository.findById(id, filter);
   }
@@ -146,5 +145,24 @@ export class CiudadController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.ciudadRepository.deleteById(id);
+  }
+
+  @get('/ciudads/{codigoPostal}')
+  @response(200, {
+    description: 'Ciudades con determinado código postal',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Ciudad, {includeRelations: true}),
+      },
+    },
+  })
+  async findByCodigoPostal(
+    @param.path.string('codigoPostal') codigoPostal: string,
+  ): Promise<Ciudad | null> {
+    return this.ciudadRepository.findOne({
+      where: {
+        codigoPostal: codigoPostal,
+      },
+    });
   }
 }

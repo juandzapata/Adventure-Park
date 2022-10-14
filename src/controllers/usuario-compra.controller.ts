@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -15,16 +16,15 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Usuario,
-  Compra,
-} from '../models';
+import {Compra, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 
+@authenticate('admin')
 export class UsuarioCompraController {
   constructor(
-    @repository(UsuarioRepository) protected usuarioRepository: UsuarioRepository,
-  ) { }
+    @repository(UsuarioRepository)
+    protected usuarioRepository: UsuarioRepository,
+  ) {}
 
   @get('/usuarios/{id}/compras', {
     responses: {
@@ -61,11 +61,12 @@ export class UsuarioCompraController {
           schema: getModelSchemaRef(Compra, {
             title: 'NewCompraInUsuario',
             exclude: ['id'],
-            optional: ['usuarioId']
+            optional: ['usuarioId'],
           }),
         },
       },
-    }) compra: Omit<Compra, 'id'>,
+    })
+    compra: Omit<Compra, 'id'>,
   ): Promise<Compra> {
     return this.usuarioRepository.compras(id).create(compra);
   }
@@ -88,7 +89,8 @@ export class UsuarioCompraController {
       },
     })
     compra: Partial<Compra>,
-    @param.query.object('where', getWhereSchemaFor(Compra)) where?: Where<Compra>,
+    @param.query.object('where', getWhereSchemaFor(Compra))
+    where?: Where<Compra>,
   ): Promise<Count> {
     return this.usuarioRepository.compras(id).patch(compra, where);
   }
@@ -103,7 +105,8 @@ export class UsuarioCompraController {
   })
   async delete(
     @param.path.number('id') id: number,
-    @param.query.object('where', getWhereSchemaFor(Compra)) where?: Where<Compra>,
+    @param.query.object('where', getWhereSchemaFor(Compra))
+    where?: Where<Compra>,
   ): Promise<Count> {
     return this.usuarioRepository.compras(id).delete(where);
   }

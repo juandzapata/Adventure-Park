@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Zona} from '../models';
 import {ZonaRepository} from '../repositories';
 
+@authenticate('admin')
 export class ZonaController {
   constructor(
     @repository(ZonaRepository)
-    public zonaRepository : ZonaRepository,
+    public zonaRepository: ZonaRepository,
   ) {}
 
   @post('/zona')
@@ -52,9 +54,7 @@ export class ZonaController {
     description: 'Zona model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Zona) where?: Where<Zona>,
-  ): Promise<Count> {
+  async count(@param.where(Zona) where?: Where<Zona>): Promise<Count> {
     return this.zonaRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class ZonaController {
       },
     },
   })
-  async find(
-    @param.filter(Zona) filter?: Filter<Zona>,
-  ): Promise<Zona[]> {
+  async find(@param.filter(Zona) filter?: Filter<Zona>): Promise<Zona[]> {
     return this.zonaRepository.find(filter);
   }
 
@@ -106,7 +104,7 @@ export class ZonaController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Zona, {exclude: 'where'}) filter?: FilterExcludingWhere<Zona>
+    @param.filter(Zona, {exclude: 'where'}) filter?: FilterExcludingWhere<Zona>,
   ): Promise<Zona> {
     return this.zonaRepository.findById(id, filter);
   }

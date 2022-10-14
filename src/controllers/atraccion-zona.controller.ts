@@ -1,22 +1,15 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Atraccion,
-  Zona,
-} from '../models';
+import {authenticate} from '@loopback/authentication';
+import {repository} from '@loopback/repository';
+import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {Atraccion, Zona} from '../models';
 import {AtraccionRepository} from '../repositories';
 
+@authenticate('admin')
 export class AtraccionZonaController {
   constructor(
     @repository(AtraccionRepository)
     public atraccionRepository: AtraccionRepository,
-  ) { }
+  ) {}
 
   @get('/atraccions/{id}/zona', {
     responses: {

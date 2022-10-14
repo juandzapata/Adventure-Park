@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -5,7 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-  import {
+import {
   del,
   get,
   getModelSchemaRef,
@@ -15,17 +16,15 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-Atraccion,
-PlanAtraccion,
-Plan,
-} from '../models';
+import {Atraccion, Plan} from '../models';
 import {AtraccionRepository} from '../repositories';
 
+@authenticate('admin')
 export class AtraccionPlanController {
   constructor(
-    @repository(AtraccionRepository) protected atraccionRepository: AtraccionRepository,
-  ) { }
+    @repository(AtraccionRepository)
+    protected atraccionRepository: AtraccionRepository,
+  ) {}
 
   @get('/atraccions/{id}/plans', {
     responses: {
@@ -65,7 +64,8 @@ export class AtraccionPlanController {
           }),
         },
       },
-    }) plan: Omit<Plan, 'id'>,
+    })
+    plan: Omit<Plan, 'id'>,
   ): Promise<Plan> {
     return this.atraccionRepository.planes(id).create(plan);
   }

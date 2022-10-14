@@ -1,22 +1,15 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Compra,
-  Usuario,
-} from '../models';
+import {authenticate} from '@loopback/authentication';
+import {repository} from '@loopback/repository';
+import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {Compra, Usuario} from '../models';
 import {CompraRepository} from '../repositories';
 
+@authenticate('admin')
 export class CompraUsuarioController {
   constructor(
     @repository(CompraRepository)
     public compraRepository: CompraRepository,
-  ) { }
+  ) {}
 
   @get('/compras/{id}/usuario', {
     responses: {

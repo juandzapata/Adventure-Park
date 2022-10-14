@@ -24,3 +24,4 @@ export * from './zona-puesto.controller';
 export * from './atraccion-zona.controller';
 export * from './zona-atraccion.controller';
 export * from './atraccion-plan.controller';
+export * from './archivos.controller';

@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -15,16 +16,14 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Parque,
-  Zona,
-} from '../models';
+import {Parque, Zona} from '../models';
 import {ParqueRepository} from '../repositories';
 
+@authenticate('admin')
 export class ParqueZonaController {
   constructor(
     @repository(ParqueRepository) protected parqueRepository: ParqueRepository,
-  ) { }
+  ) {}
 
   @get('/parques/{id}/zonas', {
     responses: {
@@ -61,11 +60,12 @@ export class ParqueZonaController {
           schema: getModelSchemaRef(Zona, {
             title: 'NewZonaInParque',
             exclude: ['id'],
-            optional: ['parqueId']
+            optional: ['parqueId'],
           }),
         },
       },
-    }) zona: Omit<Zona, 'id'>,
+    })
+    zona: Omit<Zona, 'id'>,
   ): Promise<Zona> {
     return this.parqueRepository.zonas(id).create(zona);
   }
