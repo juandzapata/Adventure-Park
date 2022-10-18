@@ -26,7 +26,7 @@ const readdir = promisify(fs.readdir);
 export class ArchivosController {
   constructor() {}
 
-  //@authenticate('admin')
+  @authenticate('admin')
   @post('/cargar-archivo', {
     responses: {
       200: {
