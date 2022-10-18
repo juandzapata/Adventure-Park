@@ -19,6 +19,7 @@ import {authenticate} from '@loopback/authentication';
 import fs from 'fs';
 const readdir = promisify(fs.readdir);
 
+//comentario
 @authenticate('admin')
 /**
  * A controller to handle file uploads using multipart/form-data media type
