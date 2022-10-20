@@ -1,9 +1,20 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {Atraccion} from './atraccion.model';
 import {Parque} from './parque.model';
 import {Puesto} from './puesto.model';
-import {Atraccion} from './atraccion.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_id_parque: {
+        name: 'fk_id_parque',
+        entity: 'Parque',
+        entityKey: 'id',
+        foreignKey: 'parqueId'
+      }
+    }
+  }
+})
 export class Zona extends Entity {
   @property({
     type: 'number',
