@@ -8,28 +8,25 @@ import {
   Request,
   requestBody,
   Response,
-  RestBindings,
+  RestBindings
 } from '@loopback/rest';
 import multer from 'multer';
 import path from 'path';
 import {promisify} from 'util';
 import {GeneralConfig} from '../config/general-config';
 
-import {authenticate} from '@loopback/authentication';
 import fs from 'fs';
 const readdir = promisify(fs.readdir);
 
 //comentario
-@authenticate('admin')
+//@authenticate('admin')
 /**
  * A controller to handle file uploads using multipart/form-data media type
  */
 export class ArchivosController {
-  constructor() {}
+  constructor() { }
 
-  //Comentario
-  @authenticate('admin')
-  @post('/cargar-archivo', {
+  @post('/cargar-archivo/{type}', {
     responses: {
       200: {
         content: {
@@ -44,16 +41,15 @@ export class ArchivosController {
     },
   })
   async fileUploading(
+    @param.path.number('type') type: number,
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @requestBody.file() request: Request,
+
   ): Promise<object | false> {
-    const filePath = path.join(
-      __dirname,
-      GeneralConfig.carpetaArchivosAtracciones,
-    );
+    const filePath = this.GetFolderPathByType(type);
     let res = await this.StoreFileToPath(
       filePath,
-      GeneralConfig.campoDeAtraccion,
+      GeneralConfig.campoDeArchivo,
       request,
       response,
       GeneralConfig.extensionesImagenes,
@@ -180,8 +176,30 @@ export class ArchivosController {
         );
         break;
       case 2:
+        filePath = path.join(
+          __dirname,
+          GeneralConfig.carpetaArchivosZonas,
+        );
         break;
       case 3:
+        filePath = path.join(
+          __dirname,
+          GeneralConfig.carpetaArchivosParquesLogos,
+        );
+        break;
+      case 4:
+        filePath = path.join(
+          __dirname,
+          GeneralConfig.carpetaArchivosParquesMapas,
+        );
+        break;
+      case 5:
+        filePath = path.join(
+          __dirname,
+          GeneralConfig.carpetaArchivosPuestos,
+        );
+        break;
+      case 6:
         break;
     }
     return filePath;
