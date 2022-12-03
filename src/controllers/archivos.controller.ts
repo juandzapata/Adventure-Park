@@ -8,7 +8,7 @@ import {
   Request,
   requestBody,
   Response,
-  RestBindings
+  RestBindings,
 } from '@loopback/rest';
 import multer from 'multer';
 import path from 'path';
@@ -24,7 +24,7 @@ const readdir = promisify(fs.readdir);
  * A controller to handle file uploads using multipart/form-data media type
  */
 export class ArchivosController {
-  constructor() { }
+  constructor() {}
 
   @post('/cargar-archivo/{type}', {
     responses: {
@@ -44,7 +44,6 @@ export class ArchivosController {
     @param.path.number('type') type: number,
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @requestBody.file() request: Request,
-
   ): Promise<object | false> {
     const filePath = this.GetFolderPathByType(type);
     let res = await this.StoreFileToPath(
@@ -176,10 +175,7 @@ export class ArchivosController {
         );
         break;
       case 2:
-        filePath = path.join(
-          __dirname,
-          GeneralConfig.carpetaArchivosZonas,
-        );
+        filePath = path.join(__dirname, GeneralConfig.carpetaArchivosZonas);
         break;
       case 3:
         filePath = path.join(
@@ -194,12 +190,10 @@ export class ArchivosController {
         );
         break;
       case 5:
-        filePath = path.join(
-          __dirname,
-          GeneralConfig.carpetaArchivosPuestos,
-        );
+        filePath = path.join(__dirname, GeneralConfig.carpetaArchivosPuestos);
         break;
       case 6:
+        filePath = path.join(__dirname, GeneralConfig.carpetaArchivosUsuarios);
         break;
     }
     return filePath;

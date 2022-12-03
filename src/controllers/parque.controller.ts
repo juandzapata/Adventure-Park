@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -21,14 +20,14 @@ import {
 import {Parque} from '../models';
 import {ParqueRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class ParqueController {
   constructor(
     @repository(ParqueRepository)
     public parqueRepository: ParqueRepository,
   ) {}
 
-  @authenticate('admin')
+  //@authenticate('admin')
   @post('/parque')
   @response(200, {
     description: 'Parque model instance',

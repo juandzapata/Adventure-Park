@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -21,7 +20,7 @@ import {
 import {Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
@@ -110,6 +109,25 @@ export class UsuarioController {
     filter?: FilterExcludingWhere<Usuario>,
   ): Promise<Usuario> {
     return this.usuarioRepository.findById(id, filter);
+  }
+
+  @get('/usuario/obtener-email/{email}')
+  @response(200, {
+    description: 'Usuario con este email',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Usuario, {includeRelations: true}),
+      },
+    },
+  })
+  async findByEmail(
+    @param.path.string('email') email: string,
+  ): Promise<Usuario | null> {
+    return this.usuarioRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
   }
 
   @patch('/usuario/{id}')

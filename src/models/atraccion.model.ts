@@ -1,4 +1,10 @@
-import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {
+  belongsTo,
+  Entity,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
 import {PlanAtraccion} from './plan-atraccion.model';
 import {Plan} from './plan.model';
 import {Zona} from './zona.model';
@@ -10,10 +16,10 @@ import {Zona} from './zona.model';
         name: 'fk_id_zona',
         entity: 'Zona',
         entityKey: 'id',
-        foreignKey: 'zonaId'
-      }
-    }
-  }
+        foreignKey: 'zonaId',
+      },
+    },
+  },
 })
 export class Atraccion extends Entity {
   @property({

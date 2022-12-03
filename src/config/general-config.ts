@@ -7,6 +7,7 @@ export namespace GeneralConfig {
   export const carpetaArchivosParquesLogos = '../../archivos/parquesLogos';
   export const carpetaArchivosParquesMapas = '../../archivos/parquesMapas';
   export const carpetaArchivosPuestos = '../../archivos/puestosComidas';
+  export const carpetaArchivosUsuarios = '../../archivos/usuarios';
   export const campoDeArchivo = 'file';
   export const extensionesImagenes = ['.SVG', '.PNG', '.JPG', '.JPEG'];
 }

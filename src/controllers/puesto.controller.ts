@@ -1,11 +1,10 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -16,12 +15,12 @@ import {
   post,
   put,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Puesto} from '../models';
 import {PuestoRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class PuestoController {
   constructor(
     @repository(PuestoRepository)

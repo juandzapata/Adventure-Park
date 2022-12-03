@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -21,7 +20,7 @@ import {
 import {Compra} from '../models';
 import {CompraRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class CompraController {
   constructor(
     @repository(CompraRepository)
