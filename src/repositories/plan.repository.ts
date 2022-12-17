@@ -1,5 +1,5 @@
 import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory, HasManyRepositoryFactory} from '@loopback/repository';
 import {MysqlDataSource} from '../datasources';
 import {Plan, PlanRelations, Compra, CompraPlan, Atraccion, PlanAtraccion} from '../models';
 import {CompraPlanRepository} from './compra-plan.repository';
@@ -23,10 +23,14 @@ export class PlanRepository extends DefaultCrudRepository<
           typeof Plan.prototype.id
         >;
 
+  public readonly planAtracciones: HasManyRepositoryFactory<PlanAtraccion, typeof Plan.prototype.id>;
+
   constructor(
     @inject('datasources.mysql') dataSource: MysqlDataSource, @repository.getter('CompraPlanRepository') protected compraPlanRepositoryGetter: Getter<CompraPlanRepository>, @repository.getter('CompraRepository') protected compraRepositoryGetter: Getter<CompraRepository>, @repository.getter('PlanAtraccionRepository') protected planAtraccionRepositoryGetter: Getter<PlanAtraccionRepository>, @repository.getter('AtraccionRepository') protected atraccionRepositoryGetter: Getter<AtraccionRepository>,
   ) {
     super(Plan, dataSource);
+    this.planAtracciones = this.createHasManyRepositoryFactoryFor('planAtracciones', planAtraccionRepositoryGetter,);
+    this.registerInclusionResolver('planAtracciones', this.planAtracciones.inclusionResolver);
     this.atracciones = this.createHasManyThroughRepositoryFactoryFor('atracciones', atraccionRepositoryGetter, planAtraccionRepositoryGetter,);
     this.registerInclusionResolver('atracciones', this.atracciones.inclusionResolver);
     this.compras = this.createHasManyThroughRepositoryFactoryFor('compras', compraRepositoryGetter, compraPlanRepositoryGetter,);

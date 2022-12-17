@@ -3,7 +3,7 @@ import {
   Entity,
   hasMany,
   model,
-  property,
+  property
 } from '@loopback/repository';
 import {Categoria} from './categoria.model';
 import {Ciudad} from './ciudad.model';
@@ -17,6 +17,12 @@ import {Zona} from './zona.model';
         entity: 'Ciudad',
         entityKey: 'id',
         foreignKey: 'ciudadId',
+      },
+      fk_id_categoria: {
+        name: 'fk_id_categoria',
+        entity: 'Categoria',
+        entityKey: 'id',
+        foreignKey: 'categoriaId',
       },
     },
   },

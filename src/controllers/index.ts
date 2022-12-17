@@ -28,3 +28,7 @@ export * from './archivos.controller';
 export * from './categoria-controller.controller';
 export * from './parque-categoria.controller';
 export * from './categoria-parque.controller';
+export * from './atraccion-plan-atraccion.controller';
+export * from './plan-plan-atraccion.controller';
+export * from './plan-atraccion-plan.controller';
+export * from './plan-atraccion-atraccion.controller';
