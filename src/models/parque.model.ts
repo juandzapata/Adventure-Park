@@ -1,4 +1,11 @@
-import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {
+  belongsTo,
+  Entity,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
+import {Categoria} from './categoria.model';
 import {Ciudad} from './ciudad.model';
 import {Zona} from './zona.model';
 
@@ -9,10 +16,10 @@ import {Zona} from './zona.model';
         name: 'fk_id_ciudad',
         entity: 'Ciudad',
         entityKey: 'id',
-        foreignKey: 'ciudadId'
-      }
-    }
-  }
+        foreignKey: 'ciudadId',
+      },
+    },
+  },
 })
 export class Parque extends Entity {
   @property({
@@ -73,6 +80,9 @@ export class Parque extends Entity {
 
   @hasMany(() => Zona)
   zonas: Zona[];
+
+  @belongsTo(() => Categoria)
+  categoriaId: number;
 
   constructor(data?: Partial<Parque>) {
     super(data);

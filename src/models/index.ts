@@ -9,3 +9,4 @@ export * from './puesto.model';
 export * from './compra.model';
 export * from './compra-plan.model';
 export * from './plan-atraccion.model';
+export * from './categoria.model';

@@ -9,3 +9,4 @@ export * from './zona.repository';
 export * from './compra-plan.repository';
 export * from './compra.repository';
 export * from './plan-atraccion.repository';
+export * from './categoria.repository';
