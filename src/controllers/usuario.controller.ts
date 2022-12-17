@@ -4,7 +4,7 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -15,7 +15,7 @@ import {
   post,
   put,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
@@ -25,7 +25,7 @@ export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
     public usuarioRepository: UsuarioRepository,
-  ) {}
+  ) { }
 
   @post('/usuario')
   @response(200, {
@@ -44,8 +44,19 @@ export class UsuarioController {
       },
     })
     usuario: Omit<Usuario, 'id'>,
-  ): Promise<Usuario> {
-    return this.usuarioRepository.create(usuario);
+  ): Promise<Usuario | null> {
+    let peticionUsuario = await this.usuarioRepository.findOne({
+      where: {
+        email: usuario.email
+      }
+    });
+
+    if (!peticionUsuario) {
+      return this.usuarioRepository.create(usuario);
+    } else {
+      return null;
+    }
+
   }
 
   @get('/usuario/count')
