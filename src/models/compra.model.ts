@@ -1,6 +1,6 @@
 import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {CompraPlan} from './compra-plan.model';
-import {Plan} from './plan.model';
+import {PlanAtraccion} from './plan-atraccion.model';
 import {Usuario} from './usuario.model';
 
 @model({
@@ -32,8 +32,11 @@ export class Compra extends Entity {
   @belongsTo(() => Usuario)
   usuarioId: number;
 
-  @hasMany(() => Plan, {through: {model: () => CompraPlan}})
-  planes: Plan[];
+  @hasMany(() => PlanAtraccion, {through: {model: () => CompraPlan}})
+  planes: PlanAtraccion[];
+
+  @hasMany(() => CompraPlan)
+  compraPlanes: CompraPlan[];
 
   constructor(data?: Partial<Compra>) {
     super(data);

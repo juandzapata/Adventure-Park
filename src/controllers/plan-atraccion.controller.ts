@@ -1,11 +1,10 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -16,17 +15,17 @@ import {
   post,
   put,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {PlanAtraccion} from '../models';
 import {PlanAtraccionRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class PlanAtraccionController {
   constructor(
     @repository(PlanAtraccionRepository)
     public planAtraccionRepository: PlanAtraccionRepository,
-  ) {}
+  ) { }
 
   @post('/plan-atraccion')
   @response(200, {

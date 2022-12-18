@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Compra} from './compra.model';
+import {PlanAtraccion} from './plan-atraccion.model';
 
 @model({
   settings: {
@@ -9,11 +11,11 @@ import {Entity, model, property} from '@loopback/repository';
         entityKey: 'id',
         foreignKey: 'compraId'
       },
-      fk_id_plan: {
-        name: 'fk_id_plan',
-        entity: 'Plan',
+      fk_id_planAtraccion: {
+        name: 'fk_id_planAtraccion',
+        entity: 'PlanAtraccion',
         entityKey: 'id',
-        foreignKey: 'planId'
+        foreignKey: 'planAtraccionId'
       }
     }
   }
@@ -34,19 +36,15 @@ export class CompraPlan extends Entity {
 
   @property({
     type: 'number',
-    required: true,
+    required: false,
   })
   total: number;
 
-  @property({
-    type: 'number',
-  })
-  compraId?: number;
+  @belongsTo(() => Compra)
+  compraId: number;
 
-  @property({
-    type: 'number',
-  })
-  planId?: number;
+  @belongsTo(() => PlanAtraccion)
+  planAtraccionId: number;
 
   constructor(data?: Partial<CompraPlan>) {
     super(data);

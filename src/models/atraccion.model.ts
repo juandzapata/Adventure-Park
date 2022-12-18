@@ -61,6 +61,9 @@ export class Atraccion extends Entity {
   @hasMany(() => Plan, {through: {model: () => PlanAtraccion}})
   planes: Plan[];
 
+  @hasMany(() => PlanAtraccion)
+  planAtracciones: PlanAtraccion[];
+
   constructor(data?: Partial<Atraccion>) {
     super(data);
   }
