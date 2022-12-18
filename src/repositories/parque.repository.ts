@@ -1,7 +1,7 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {MysqlDataSource} from '../datasources';
-import {Parque, ParqueRelations, Ciudad, Zona, Categoria} from '../models';
+import {Ciudad, Parque, ParqueRelations, Zona, Categoria} from '../models';
 import {CiudadRepository} from './ciudad.repository';
 import {ZonaRepository} from './zona.repository';
 import {CategoriaRepository} from './categoria.repository';

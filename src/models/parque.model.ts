@@ -5,9 +5,9 @@ import {
   model,
   property
 } from '@loopback/repository';
-import {Categoria} from './categoria.model';
 import {Ciudad} from './ciudad.model';
 import {Zona} from './zona.model';
+import {Categoria} from './categoria.model';
 
 @model({
   settings: {

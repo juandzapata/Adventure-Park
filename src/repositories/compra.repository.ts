@@ -1,10 +1,9 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {MysqlDataSource} from '../datasources';
-import {Compra, CompraRelations, Usuario, Plan, CompraPlan} from '../models';
-import {UsuarioRepository} from './usuario.repository';
+import {Compra, CompraPlan, CompraRelations, Usuario} from '../models';
 import {CompraPlanRepository} from './compra-plan.repository';
-import {PlanRepository} from './plan.repository';
+import {UsuarioRepository} from './usuario.repository';
 
 export class CompraRepository extends DefaultCrudRepository<
   Compra,
@@ -13,18 +12,15 @@ export class CompraRepository extends DefaultCrudRepository<
 > {
 
   public readonly usuario: BelongsToAccessor<Usuario, typeof Compra.prototype.id>;
+  public readonly compraPlanes: HasManyRepositoryFactory<CompraPlan, typeof Compra.prototype.id>;
 
-  public readonly planes: HasManyThroughRepositoryFactory<Plan, typeof Plan.prototype.id,
-          CompraPlan,
-          typeof Compra.prototype.id
-        >;
 
   constructor(
-    @inject('datasources.mysql') dataSource: MysqlDataSource, @repository.getter('UsuarioRepository') protected usuarioRepositoryGetter: Getter<UsuarioRepository>, @repository.getter('CompraPlanRepository') protected compraPlanRepositoryGetter: Getter<CompraPlanRepository>, @repository.getter('PlanRepository') protected planRepositoryGetter: Getter<PlanRepository>,
+    @inject('datasources.mysql') dataSource: MysqlDataSource, @repository.getter('UsuarioRepository') protected usuarioRepositoryGetter: Getter<UsuarioRepository>, @repository.getter('CompraPlanRepository') protected compraPlanRepositoryGetter: Getter<CompraPlanRepository>
   ) {
     super(Compra, dataSource);
-    this.planes = this.createHasManyThroughRepositoryFactoryFor('planes', planRepositoryGetter, compraPlanRepositoryGetter,);
-    this.registerInclusionResolver('planes', this.planes.inclusionResolver);
+    this.compraPlanes = this.createHasManyRepositoryFactoryFor('compraPlanes', compraPlanRepositoryGetter,);
+    this.registerInclusionResolver('compraPlanes', this.compraPlanes.inclusionResolver);
     this.usuario = this.createBelongsToAccessorFor('usuario', usuarioRepositoryGetter,);
     this.registerInclusionResolver('usuario', this.usuario.inclusionResolver);
   }

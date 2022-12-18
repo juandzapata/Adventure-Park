@@ -1,7 +1,7 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {Compra} from './compra.model';
-import {CompraPlan} from './compra-plan.model';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Atraccion} from './atraccion.model';
+import {CompraPlan} from './compra-plan.model';
+import {Compra} from './compra.model';
 import {PlanAtraccion} from './plan-atraccion.model';
 
 @model()
@@ -24,12 +24,6 @@ export class Plan extends Entity {
     required: true,
   })
   color: string;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  valor: number;
 
   @hasMany(() => Compra, {through: {model: () => CompraPlan}})
   compras: Compra[];
