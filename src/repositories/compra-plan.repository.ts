@@ -1,7 +1,7 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {MysqlDataSource} from '../datasources';
-import {CompraPlan, CompraPlanRelations, Compra, PlanAtraccion} from '../models';
+import {Compra, CompraPlan, CompraPlanRelations, PlanAtraccion} from '../models';
 import {CompraRepository} from './compra.repository';
 import {PlanAtraccionRepository} from './plan-atraccion.repository';
 
