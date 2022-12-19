@@ -8,8 +8,8 @@ const config = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: 'julis',
-  database: 'adventurepark_bd'
+  password: '0584jj', // Clave juan: 0584jj
+  database: 'adventurepark_bd',
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -19,7 +19,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class MysqlDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = 'mysql';
   static readonly defaultConfig = config;
 

@@ -1,4 +1,10 @@
-import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {
+  belongsTo,
+  Entity,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
 import {Atraccion} from './atraccion.model';
 import {CompraPlan} from './compra-plan.model';
 import {Plan} from './plan.model';
@@ -28,16 +34,6 @@ export class PlanAtraccion extends Entity {
     generated: true,
   })
   id?: number;
-
-  @property({
-    type: 'string',
-  })
-  descripcion?: string;
-
-  @property({
-    type: 'number',
-  })
-  precio?: number;
 
   @belongsTo(() => Plan, {name: 'planes'})
   planId: number;

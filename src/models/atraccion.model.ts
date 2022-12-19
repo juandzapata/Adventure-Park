@@ -1,13 +1,6 @@
-import {
-  belongsTo,
-  Entity,
-  hasMany,
-  model,
-  property,
-} from '@loopback/repository';
-import {PlanAtraccion} from './plan-atraccion.model';
-import {Plan} from './plan.model';
+import {belongsTo, Entity, model, property, hasMany} from '@loopback/repository';
 import {Zona} from './zona.model';
+import {PlanAtraccion} from './plan-atraccion.model';
 
 @model({
   settings: {
@@ -55,14 +48,16 @@ export class Atraccion extends Entity {
   })
   descripcion?: string;
 
+  @property({
+    type: 'string',
+  })
+  estado?: string;
+
   @belongsTo(() => Zona)
   zonaId: number;
 
-  @hasMany(() => Plan, {through: {model: () => PlanAtraccion}})
-  planes: Plan[];
-
   @hasMany(() => PlanAtraccion)
-  planAtracciones: PlanAtraccion[];
+  planAtraccions: PlanAtraccion[];
 
   constructor(data?: Partial<Atraccion>) {
     super(data);

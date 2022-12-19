@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -19,7 +18,7 @@ import {
 import {Puesto, Zona} from '../models';
 import {ZonaRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class ZonaPuestoController {
   constructor(
     @repository(ZonaRepository) protected zonaRepository: ZonaRepository,
