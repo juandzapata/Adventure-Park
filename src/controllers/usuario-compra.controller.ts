@@ -1,10 +1,9 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -14,17 +13,17 @@ import {
   param,
   patch,
   post,
-  requestBody,
+  requestBody
 } from '@loopback/rest';
 import {Compra, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class UsuarioCompraController {
   constructor(
     @repository(UsuarioRepository)
     protected usuarioRepository: UsuarioRepository,
-  ) {}
+  ) { }
 
   @get('/usuarios/{id}/compras', {
     responses: {
