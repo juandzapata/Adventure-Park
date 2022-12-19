@@ -25,6 +25,16 @@ export class Plan extends Entity {
   })
   color: string;
 
+  @property({
+    type: 'string',
+  })
+  descripcion?: string;
+
+  @property({
+    type: 'number',
+  })
+  precio?: number;
+
   @hasMany(() => Compra, {through: {model: () => CompraPlan}})
   compras: Compra[];
 

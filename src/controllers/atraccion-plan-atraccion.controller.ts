@@ -42,7 +42,7 @@ export class AtraccionPlanAtraccionController {
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<PlanAtraccion>,
   ): Promise<PlanAtraccion[]> {
-    return this.atraccionRepository.planAtracciones(id).find(filter);
+    return this.atraccionRepository.planAtraccions(id).find(filter);
   }
 
   @post('/atraccions/{id}/plan-atraccions', {
@@ -67,7 +67,7 @@ export class AtraccionPlanAtraccionController {
       },
     }) planAtraccion: Omit<PlanAtraccion, 'id'>,
   ): Promise<PlanAtraccion> {
-    return this.atraccionRepository.planAtracciones(id).create(planAtraccion);
+    return this.atraccionRepository.planAtraccions(id).create(planAtraccion);
   }
 
   @patch('/atraccions/{id}/plan-atraccions', {
@@ -90,7 +90,7 @@ export class AtraccionPlanAtraccionController {
     planAtraccion: Partial<PlanAtraccion>,
     @param.query.object('where', getWhereSchemaFor(PlanAtraccion)) where?: Where<PlanAtraccion>,
   ): Promise<Count> {
-    return this.atraccionRepository.planAtracciones(id).patch(planAtraccion, where);
+    return this.atraccionRepository.planAtraccions(id).patch(planAtraccion, where);
   }
 
   @del('/atraccions/{id}/plan-atraccions', {
@@ -105,6 +105,6 @@ export class AtraccionPlanAtraccionController {
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(PlanAtraccion)) where?: Where<PlanAtraccion>,
   ): Promise<Count> {
-    return this.atraccionRepository.planAtracciones(id).delete(where);
+    return this.atraccionRepository.planAtraccions(id).delete(where);
   }
 }

@@ -1,10 +1,9 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -14,12 +13,12 @@ import {
   param,
   patch,
   post,
-  requestBody,
+  requestBody
 } from '@loopback/rest';
 import {Atraccion, Zona} from '../models';
 import {ZonaRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class ZonaAtraccionController {
   constructor(
     @repository(ZonaRepository) protected zonaRepository: ZonaRepository,
