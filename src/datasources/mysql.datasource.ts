@@ -8,7 +8,7 @@ const config = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: '0584jj', // Clave juan: 0584jj
+  password: 'julis', // Clave juan: 0584jj
   database: 'adventurepark_bd',
 };
 
@@ -19,8 +19,7 @@ const config = {
 @lifeCycleObserver('datasource')
 export class MysqlDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver
-{
+  implements LifeCycleObserver {
   static dataSourceName = 'mysql';
   static readonly defaultConfig = config;
 
